@@ -1,0 +1,26 @@
+server:
+  port: 8081
+ # context-path: /index
+index:
+  hello: "Hello,springboot."
+spring:
+  profiles:
+    active: prod
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+  mvc:
+    favicon:
+      enabled: false #关闭log
+  application:
+    name: index-service
+logging:
+  file: /var/log/springboot.log
+  level: debug
+eureka:
+  client:
+    serviceUrl:
+          defaultZone: http://localhost:1234/eureka/
+    healthcheck:
+          enabled: true #通过 /health 检测client的可用性
