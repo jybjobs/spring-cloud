@@ -1,8 +1,9 @@
 
 # springcloud-hystrix
 
-## 增加容错保护
 ![hystrix](hystrix.png)
+
+## 增加容错保护
 #### 1. 引入pom
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
