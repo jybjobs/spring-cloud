@@ -15,8 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-
 @EnableDiscoveryClient
 @SpringBootApplication
 public class SpringbootDemoApplication {
@@ -28,10 +26,11 @@ public class SpringbootDemoApplication {
 
 	@Bean
 	@LoadBalanced
-	RestTemplate restTemplate(){
+	RestTemplate restTemplate()
+
+
+	{
 		return  new RestTemplate();
 	}
-
-
 
 }
