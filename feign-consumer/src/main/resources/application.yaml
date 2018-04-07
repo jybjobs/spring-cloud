@@ -1,0 +1,39 @@
+server:
+  port: 9001
+ # context-path: /index
+spring:
+#  profiles:
+#    active: prod
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+  mvc:
+    favicon:
+      enabled: false #关闭log
+  application:
+    name: feign-consumer
+logging:
+  file: /var/log/springboot.log
+  level: debug
+eureka:
+  client:
+    serviceUrl:
+          defaultZone: http://localhost:1234/eureka/
+    healthcheck:
+          enabled: true #通过 /health 检测client的可用性
+
+
+ribbon:
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 2
+feign:
+  hystrix:
+     enabled: true  #是否开启hystrix
+  compression:
+    request:
+      enabled: true # 开启请求压缩
+      min-request-size: 2048 #最小压缩大小
+
+
+
