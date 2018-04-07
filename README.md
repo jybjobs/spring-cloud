@@ -11,7 +11,8 @@
 ## 声明式服务调用 Feign
 [Feign](feign-consumer/README.md)
 ## API 网关 Zuul
+[Zuul](api-gateway/README.md)
 ## 分布式配置中心 Config
-## 消息总线 Bus
+## 消息总线 Bus 
 ## 消息驱动的微服务 Stream
 ## 分布式服务跟踪 Sleuth
