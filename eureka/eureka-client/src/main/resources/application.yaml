@@ -15,6 +15,11 @@ spring:
       enabled: false #关闭log
   application:
     name: index-service
+  boot:
+    admin:
+       routes:
+          endpoints:  env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+
 logging:
   file: /var/log/springboot.log
   level: debug
@@ -24,3 +29,7 @@ eureka:
           defaultZone: http://localhost:1234/eureka/
     healthcheck:
           enabled: true #通过 /health 检测client的可用性
+management:
+  security:
+    enabled: false
+

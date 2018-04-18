@@ -11,3 +11,16 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     enable-self-preservation: false #关闭保护机制
+  dashboard:
+    enabled: false
+
+management:
+  security:
+    enabled: false
+#spring:
+#  cloud:
+#    dashboard:
+#      http:
+#         username: user
+#         password: root
+
