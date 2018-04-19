@@ -14,13 +14,13 @@ eureka:
   dashboard:
     enabled: false
 
-management:
-  security:
-    enabled: false
-#spring:
-#  cloud:
-#    dashboard:
-#      http:
-#         username: user
-#         password: root
+#management:
+#  security:
+#    enabled: false
+spring:
+  cloud:
+    dashboard:
+      http:
+         username: admin
+         password: admin
 

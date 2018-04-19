@@ -55,7 +55,11 @@
 			<artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
 		</dependency>
 		<!--  hystrix end -->
-
+		<!-- jmx-bean management -->
+		<dependency>
+			<groupId>org.jolokia</groupId>
+			<artifactId>jolokia-core</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
