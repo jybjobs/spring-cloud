@@ -11,12 +11,10 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLEncoder;
 import java.util.logging.Logger;
+import java.util.zip.GZIPOutputStream;
 
 
 @RestController
@@ -68,10 +66,30 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
         paramMap.add("jsonStr", json);
         Long reqBeforeTime = System.currentTimeMillis()- startTime;
         System.out.println("reqBeforeTime = [" + reqBeforeTime + "]");
+
         String str = restTemplate.postForEntity("http://INDEX-SERVICE/params", paramMap,String.class).getBody();
         logger.info("#### 传输 成功！####");
         Long afterTime = System.currentTimeMillis()- startTime;
         System.out.println("afterTime = [" + afterTime + "]");
         return str;
+    }
+
+    private byte[] getGzip(byte[] body) throws IOException {
+
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        try {
+            GZIPOutputStream zipStream = new GZIPOutputStream(byteStream);
+            try {
+                zipStream.write(body);
+            } finally {
+                zipStream.close();
+            }
+        } finally {
+            byteStream.close();
+        }
+
+        byte[] compressedData = byteStream.toByteArray();
+        return compressedData;
+
     }
 }

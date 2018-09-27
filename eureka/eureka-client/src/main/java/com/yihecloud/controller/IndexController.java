@@ -39,6 +39,7 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
     @ResponseBody
     String params(@RequestBody ParamEntity paramEntity) {
    //     String params() {
+        long startTime = System.currentTimeMillis();
         ServiceInstance instances = discoveryClient.getLocalServiceInstance();
         logger.info(instances.getHost() + " ==> "+instances.getServiceId());
         Map params = new HashMap<>();
@@ -52,12 +53,14 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         // 忽略无法转换的对象 “No serializer found for class com.xxx.xxx”
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+        String ret = null;
         try {
-            return objectMapper.writeValueAsString(paramEntity);
+            ret = objectMapper.writeValueAsString(paramEntity);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return  null;
+        System.out.println("endTime = [" + (System.currentTimeMillis() -startTime) + "]");
+        return  ret;
     }
 
 }
