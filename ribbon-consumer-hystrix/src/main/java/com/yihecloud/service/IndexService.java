@@ -30,15 +30,15 @@ public class IndexService {
     }
 
 
-    @HystrixCommand(fallbackMethod = "paramsFallback")
-    public String params() {
+  //  @HystrixCommand(fallbackMethod = "paramsFallback")
+    public String params(ParamEntity paramEntity) {
         Long startTime = System.currentTimeMillis();
         System.out.println("startTime = [" + startTime + "]");
         Map params = new HashMap<>();
         for (int i=0;i<10000;i++){
             params.put(i,"aa"+i);
         }
-        ParamEntity paramEntity = new ParamEntity("1234", "testinfo", "testinfoinfo", params);
+         paramEntity = new ParamEntity("1234", "testinfo", "testinfoinfo", params);
         ResponseEntity<String> responseEntity = restTemplate.postForEntity("http://INDEX-SERVICE/params", paramEntity,String.class);
         Long endTime = System.currentTimeMillis() -startTime;
         System.out.println("endTime = [" + endTime + "]");

@@ -55,7 +55,7 @@ public class HttpClientUtil {
                 if (HttpStatus.SC_OK == status) {
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("send http success, url=" + url
-                                + ", content=" + message);
+                                + ", content=" + postMethod.getResponseBodyAsString());
                     }
                     return;
                 } else {
@@ -74,7 +74,7 @@ public class HttpClientUtil {
 
     public static void main(String[] args) {
 
-        HttpClientUtil.sendHttp("http://localhost:8000/ptest",
+        HttpClientUtil.sendHttp("http://localhost:8000/params",
                 "{\"id\":\"123\",\"name\":\"testinfo\",\"value\":\"testinfoinfo\",\"params\":{\"1\":\"aa\",\"2\":\"bb\"}}");
     }
 }

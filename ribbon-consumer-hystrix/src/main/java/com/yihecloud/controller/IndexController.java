@@ -1,11 +1,14 @@
 package com.yihecloud.controller;
 
 
+import com.yihecloud.entity.ParamEntity;
 import com.yihecloud.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,8 +36,13 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
     }
 
     @RequestMapping("/params")
-    String params() {
-        return  indexService.params();
+    @ResponseBody
+    String params(@RequestBody ParamEntity paramEntity) {
+        //     String params() {
+        long startTime = System.currentTimeMillis();
+       String ret = indexService.params(paramEntity);
+        System.out.println("endTime = [" + (System.currentTimeMillis() -startTime) + "]");
+        return  ret;
     }
     @RequestMapping(value="/ptest")
     public String receive(HttpServletRequest req){
@@ -67,7 +75,7 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
         Long reqBeforeTime = System.currentTimeMillis()- startTime;
         System.out.println("reqBeforeTime = [" + reqBeforeTime + "]");
 
-        String str = restTemplate.postForEntity("http://INDEX-SERVICE/params", paramMap,String.class).getBody();
+        String str = restTemplate.postForEntity("http://INDEX-SERVICE/params", sb.toString(),String.class).getBody();
         logger.info("#### 传输 成功！####");
         Long afterTime = System.currentTimeMillis()- startTime;
         System.out.println("afterTime = [" + afterTime + "]");
