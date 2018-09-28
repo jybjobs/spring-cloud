@@ -22,3 +22,7 @@
 ## 依赖隔离
 ## 请求缓存
 ## 请求合并
+
+## http body gzip压缩
+
+> 测试样例：{"id":"123","name":"testinfo","value":"testinfoinfo","params":{"1":"aa","2":"bb"}}
