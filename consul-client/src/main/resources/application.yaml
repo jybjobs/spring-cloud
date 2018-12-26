@@ -1,0 +1,46 @@
+server:
+  port: 8081
+  context-path: /index-service
+index:
+  hello: "Hello,springboot."
+spring:
+  profiles:
+    active: prod
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+  mvc:
+    favicon:
+      enabled: false #关闭log
+  application:
+    name: index-service
+  boot:
+    admin:
+       routes:
+          endpoints:  env,metrics,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+  cloud:
+    consul:
+      host: 10.10.0.131
+      port: 8500
+      discovery:
+        instanceId: ${spring.application.name}
+        enabled: true
+        health-check-interval: 10s
+        register: true
+#        tags: type=tools,demo
+        health-check-path: ${server.context-path}/health
+logging:
+  file: /var/log/springboot.log
+  level: debug
+
+#eureka:
+#  client:
+#    serviceUrl:
+#          defaultZone: http://localhost:1234/eureka/
+#    healthcheck:
+#          enabled: true #通过 /health 检测client的可用性
+#management:
+#  security:
+#    enabled: false
+
