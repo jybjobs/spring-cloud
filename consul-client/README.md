@@ -5,10 +5,10 @@
 
 #### 基本步骤
 1.  引入pom
-````
+````xml
 <dependency>
-	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-starter-eureka</artifactId>
+     <groupId>org.springframework.cloud</groupId>
+     <artifactId>spring-cloud-starter-consul-discovery</artifactId>
 </dependency>
 ````
 2.  配置
@@ -19,7 +19,6 @@
 ````
 #### 健康检查
 
-> 默认情况下eureka的健康检查是依赖client端的心跳实现的;
 > 实际使用中可以通过spring-boot-actuator 端的health来实现：
 1.  引入pom
  ````
@@ -29,4 +28,3 @@
  </dependency>
  ````
 2.  开启检测
-> eureka.client.healthcheck.enabled=true #通过 /health 检测client的可用性
