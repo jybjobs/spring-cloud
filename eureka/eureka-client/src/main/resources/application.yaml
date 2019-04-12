@@ -29,6 +29,7 @@ eureka:
           defaultZone: http://localhost:1234/eureka/
     healthcheck:
           enabled: true #通过 /health 检测client的可用性
+    registry-fetch-interval-seconds: 10
 management:
   security:
     enabled: false

@@ -17,7 +17,7 @@ public class FilterGzip implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         
-        System.out.println("filter");
+   //     System.out.println("filter");
 
         chain.doFilter(new GzipRequestWrapper((HttpServletRequest) request),
                 response);
