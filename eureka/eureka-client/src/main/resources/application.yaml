@@ -33,4 +33,8 @@ eureka:
 management:
   security:
     enabled: false
+info:
+    app:
+      name: index-service
+      version: v1.0.0
 

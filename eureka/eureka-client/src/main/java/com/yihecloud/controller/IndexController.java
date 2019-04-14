@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.yihecloud.entity.ParamEntity;
-import com.yihecloud.utils.SelfHealthIndicator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -27,8 +26,8 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    @Autowired
-    private SelfHealthIndicator selfHealthIndicator;
+    //@Autowired
+   // private SelfHealthIndicator selfHealthIndicator;
 
     @RequestMapping("/index")
     @ResponseBody
@@ -69,7 +68,7 @@ private final Logger logger = Logger.getLogger(String.valueOf(getClass()));
     @RequestMapping("/upstatus")
     @ResponseBody
     public String  upStatus(boolean status){
-        selfHealthIndicator.setUP(status);
+       // selfHealthIndicator.setUP(status);
         return "success!";
     }
 
