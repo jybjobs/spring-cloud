@@ -2,9 +2,8 @@ package com.rkhd.eclient.utils;
 
 import com.netflix.appinfo.HealthCheckHandler;
 import com.netflix.appinfo.InstanceInfo;
-import com.rkhd.sre.actuator.health.SelfHealthIndicator;
-import com.rkhd.sre.actuator.health.Status;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.health.Status;
 import org.springframework.stereotype.Component;
 
 @Component

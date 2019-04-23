@@ -1,15 +1,18 @@
-package com.rkhd.sre.actuator.health;
+package com.rkhd.eclient.utils;
 
 
+
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class SelfHealthIndicator implements HealthIndicator {
 
     private  boolean UP = true;
 
   //  @RequestMapping("/health")
-    public Health health() { // 字定義的health接口
+    public Health health() { // 自定义的health接口
         if(UP) {
             return new Health.Builder().withDetail("description","Demo service").withDetail("service status","UP").up().build();
         }else {

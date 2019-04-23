@@ -1,7 +1,7 @@
 package com.rkhd.eclient;
 
 import com.rkhd.eclient.utils.FilterGzip;
-import com.rkhd.sre.actuator.health.SelfHealthIndicator;
+import com.rkhd.eclient.utils.SelfHealthIndicator;
 import org.apache.commons.codec.Charsets;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -53,8 +53,8 @@ public FilterRegistrationBean filterRegistrationBean() {
 	/**
 	 *  health check
 	 */
-	@Bean
-	public SelfHealthIndicator selfHealthIndicator(){
-		return new SelfHealthIndicator();
-	}
+//	@Bean
+//	public SelfHealthIndicator selfHealthIndicator(){
+//		return new SelfHealthIndicator();
+//	}
 }
