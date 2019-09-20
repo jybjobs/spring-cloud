@@ -1,0 +1,9 @@
+com\rkhd\eclient\utils\GzipRequestWrapper.class
+com\rkhd\eclient\streams\DemoKafkaProcessor$1.class
+com\rkhd\eclient\entity\CatServiceProvider.class
+com\rkhd\eclient\EurekaClientApplication.class
+com\rkhd\eclient\controller\ProducerController.class
+com\rkhd\eclient\streams\DemoKafkaProcessor.class
+com\rkhd\eclient\utils\GzipRequestWrapper$1.class
+com\rkhd\eclient\entity\ParamEntity.class
+com\rkhd\eclient\utils\FilterGzip.class
