@@ -73,9 +73,9 @@ management:
 
 
 spring.application.name: kafka-streams
-spring.cloud.stream.bindings.output:
+spring.cloud.stream.bindings.output_provider:
   destination: counts
-spring.cloud.stream.bindings.input:
+spring.cloud.stream.bindings.input_provider:
   destination: words
 spring.cloud.stream.kafka.streams.binder:
   brokers: 192.168.0.79:9092

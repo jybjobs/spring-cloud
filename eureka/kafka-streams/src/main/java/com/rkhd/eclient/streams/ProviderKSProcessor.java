@@ -4,8 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.rkhd.eclient.entity.CatServiceBase;
 import com.rkhd.eclient.entity.CatServiceMetrics;
 import com.rkhd.eclient.entity.CatServiceProvider;
-import com.rkhd.eclient.utils.serde.StreamsSerdes;
-import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.utils.Bytes;
 import org.apache.kafka.streams.KeyValue;
@@ -14,30 +12,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.binder.kafka.streams.annotations.KafkaStreamsProcessor;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.Duration;
-import java.util.concurrent.atomic.AtomicReference;
 
-@EnableBinding(KafkaStreamsProcessor.class)
+@EnableBinding(CATKafkaStreamsProcessor.class)
 @Service
 public class ProviderKSProcessor {
 	private static Logger logger = LoggerFactory.getLogger(ProviderKSProcessor.class);
 
-	public static final String INPUT_TOPIC = "input";
-	public static final String OUTPUT_TOPIC = "output";
 	public static final int WINDOW_SIZE_MS = 30000;
-	@StreamListener(INPUT_TOPIC)
-	@SendTo(OUTPUT_TOPIC)
+	@StreamListener(CATKafkaStreamsProcessor.INPUT_PROVIDER)
+	@SendTo(CATKafkaStreamsProcessor.OUTPUT_PROVIDER)
 	public KStream<Bytes, String> process(KStream<Bytes, String> input) {
 
 		KStream<Bytes, String> stream =null;
 		try{
-			Serde<String> stringSerdes = Serdes.String();
-			Serde<CatServiceProvider> catServiceProviderSerde = StreamsSerdes.CatServiceProderSerde();
+//			Serde<String> stringSerdes = Serdes.String();
+//			Serde<CatServiceProvider> catServiceProviderSerde = StreamsSerdes.CatServiceProderSerde();
 			stream = input
 					.map((key, value) ->
 							{
@@ -53,8 +47,8 @@ public class ProviderKSProcessor {
 							}
 					)
 					//.mapValues((k,v)->JSON.parseObject(v,CatServiceProvider.class))
-					.groupByKey(Serialized.with(stringSerdes,Serdes.String() ))
-					.windowedBy(TimeWindows.of(WINDOW_SIZE_MS).grace(Duration.ZERO)) // https://blog.csdn.net/u012364631/article/details/94019707
+					.groupByKey(Grouped.with(Serdes.String(),Serdes.String()))
+					.windowedBy(TimeWindows.of(Duration.ofMillis(WINDOW_SIZE_MS)).grace(Duration.ZERO)) // https://blog.csdn.net/u012364631/article/details/94019707
 					.aggregate(()->null, new Aggregator<String, String, Object>() {
 						@Override
 						public Object apply(String key, String value, Object aggregate) {
@@ -62,13 +56,18 @@ public class ProviderKSProcessor {
 								return null;
 							}
 							try {
+								CatServiceProvider catServiceProvider = JSON.parseObject(value,CatServiceProvider.class);
 								if(aggregate != null){
-									CatServiceProvider catServiceProvider = JSON.parseObject(value,CatServiceProvider.class);
 									CatServiceProvider cc = JSON.parseObject(((Bytes)aggregate).get(),CatServiceProvider.class);
-									cc.setCount(cc.getCount()+1);
-									cc.setMessageId(cc.getMessageId()+","+catServiceProvider.getMessageId());
+									cc.setCount(cc.getCount() +1);
+									String messageIds = cc.getMessageId();
+									if(messageIds != null && messageIds.split(",").length <5){
+										cc.setMessageId(cc.getMessageId()+","+catServiceProvider.getMessageId());
+									}
 									cc.setDurationInMillis(cc.getDurationInMillis()+ catServiceProvider.getDurationInMillis());
 									value = JSON.toJSONString(cc);
+								}else{
+                                   value = JSON.toJSONString(catServiceProvider);
 								}
 							}catch (Exception e){
 								logger.error("aggregate Object to json error.{}",e.getMessage());
@@ -90,6 +89,7 @@ public class ProviderKSProcessor {
 								}
 							}catch (Exception e){
 								logger.error("value map error.{}",e.getMessage());
+								return  null;
 							}
 						}
 						return  new KeyValue<>(null,value.toString() );
